@@ -1,0 +1,22 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: monitoring
+  name: ingress-grafana
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - host: graf.telecom-project.club
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific 
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
